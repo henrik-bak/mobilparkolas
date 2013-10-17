@@ -29,7 +29,7 @@
         android:id="@+id/et_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/radioGroup1"
+        android:layout_above="@+id/rg_settings"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:ems="10" >
@@ -38,7 +38,7 @@
     </EditText>
 
     <RadioGroup
-        android:id="@+id/radioGroup1"
+        android:id="@+id/rg_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_settings_next"
