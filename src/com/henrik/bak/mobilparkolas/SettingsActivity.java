@@ -1,6 +1,8 @@
 package com.henrik.bak.mobilparkolas;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
@@ -17,8 +19,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.example.mobilparkolas.R;
 
 public class SettingsActivity extends Activity {
 
@@ -52,19 +52,35 @@ public class SettingsActivity extends Activity {
 			}
 
 			private void goNextScreen() {
+				Intent i = null;
 				if (spn_cityList.getSelectedItem().equals("Szeged")) {
-					Intent i = new Intent(SettingsActivity.this, Szeged.class);
+					i = new Intent(SettingsActivity.this, Szeged.class);
 					
-					int id= rg_settings.getCheckedRadioButtonId();
-					View radioButton = rg_settings.findViewById(id);
-					int radioId = rg_settings.indexOfChild(radioButton);
-					RadioButton btn = (RadioButton) rg_settings.getChildAt(radioId);
-					String selection = (String) btn.getText();
-					
-					i.putExtra("vehichleType", selection);
-					i.putExtra("licensePlate", et_licensePlate.getText().toString());
-					startActivity(i);
+				} else {
+					i = new Intent(SettingsActivity.this, MobilParkActivity.class);
 				}
+				
+				int id= rg_settings.getCheckedRadioButtonId();
+				View radioButton = rg_settings.findViewById(id);
+				int radioId = rg_settings.indexOfChild(radioButton);
+				RadioButton btn = (RadioButton) rg_settings.getChildAt(radioId);
+				String selection = (String) btn.getText();
+				
+				if (selection.equals("Busz")) {
+					selection="B";
+				} else if (selection.equals("Teherautó")) {
+					selection="T";
+				} else if (selection.equals("Motorkerékpár")) {
+					selection="M";
+				} else {
+					selection="";
+				}
+				
+				
+				i.putExtra("vehichleType", selection);
+				
+				i.putExtra("licensePlate", et_licensePlate.getText().toString());
+				startActivity(i);
 
 			}
 
@@ -92,9 +108,11 @@ public class SettingsActivity extends Activity {
 
 	private void addItemsOnSpinner() {
 		spn_cityList = (Spinner) findViewById(R.id.cityList);
-		List<String> list = new ArrayList<String>();
-		list.add("Budapest");
-		list.add("Szeged");
+		List<String> list = Arrays.asList("Budapest", "Debrecen", "Berettyóújfalu", "Hajdúszoboszló", "Békéscsaba", "Eger", "Gödöllõ", 
+				"Gyöngyös", "Gyõr", "Kapuvár", "Székesfehérvár", "Balatonfüred", "Veszprém", "Tapolca", "Tihany", "Keszthely", "Szekszárd", 
+				"Kaposvár", "Nagykanizsa", "Zalaegerszeg", "Ajka", "Szolnok", "Vác", "Hódmezõvásárhely", "Mosonmagyaróvár", "Szombathely", 
+				"Badacsonytomaj", "Szentendre", "Kiskunhalas", "Miskolc", "Szeged");
+		Collections.sort(list);
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 				R.layout.spinner_item, list);
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
