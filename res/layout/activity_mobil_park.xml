@@ -9,14 +9,6 @@
     tools:context=".MobilPark" >
 
     <Button
-        android:id="@+id/btn_backMobil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Vissza" />
-
-    <Button
         android:id="@+id/btn_sendSMSMobil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,21 +16,48 @@
         android:layout_centerHorizontal="true"
         android:text="SMS küldése!" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_areaCode"
+        android:layout_below="@+id/btn_backMobil"
+        android:layout_marginTop="22dp"
+        android:text="Adja meg a parkolókörzet számát!" />
+
+    <Button
+        android:id="@+id/btn_backMobil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Vissza" />
+
     <EditText
         android:id="@+id/et_areaCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_backMobil"
+        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
-        android:ems="10" />
+        android:layout_marginTop="21dp"
+        android:ems="10"
+        android:hint="Körzetszám" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spn_timeSelectorMobil"
+        android:layout_alignLeft="@+id/et_areaCode"
+        android:layout_marginBottom="38dp"
+        android:text="Mennyi ideig szeretne parkolni?" />
 
     <Spinner
         android:id="@+id/spn_timeSelectorMobil"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btn_backMobil"
-        android:layout_below="@+id/et_areaCode"
-        android:layout_marginTop="51dp" />
+        android:layout_above="@+id/btn_sendSMSMobil"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="66dp" />
 
 </RelativeLayout>
