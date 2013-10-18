@@ -4,13 +4,18 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.mobilparkolas.R;
 
@@ -22,11 +27,28 @@ public class Szeged extends Activity implements OnCheckedChangeListener {
 
 	private Spinner spn_timeSelector;
 	private RadioGroup radgrp;
+	private Button btn_sendSMS;
+	private String licensePlate;
+	private String vehicleType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_szeged);
+		
+		if (savedInstanceState == null) {
+		    Bundle extras = getIntent().getExtras();
+		    if(extras == null) {
+		    	licensePlate= null;
+		    	vehicleType= null;
+		    } else {
+		    	licensePlate= extras.getString("licensePlate");
+		    	vehicleType= extras.getString("vehichleType");
+		    }
+		} else {
+			licensePlate= (String) savedInstanceState.getSerializable("licensePlate");
+			vehicleType= (String) savedInstanceState.getSerializable("vehichleType");
+		}
 
 		spn_timeSelector = (Spinner) findViewById(R.id.spn_timeSelector);
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
@@ -36,6 +58,30 @@ public class Szeged extends Activity implements OnCheckedChangeListener {
 
 		radgrp = (RadioGroup) findViewById(R.id.rg_szeged);
 		radgrp.setOnCheckedChangeListener(this);
+		
+		initSendSMS();
+	}
+
+	private void initSendSMS() {
+		btn_sendSMS = (Button) findViewById(R.id.btn_sendSMS);
+		
+		btn_sendSMS.setOnClickListener(new OnClickListener()
+	    {
+		      public void onClick(View v)
+		      {
+		    	  sendSMS();
+		    	  
+		      }
+
+
+	    });
+		
+	}
+	
+	private void sendSMS() {
+		SmsManager sms = SmsManager.getDefault();
+		String content = licensePlate+",";
+	       sms.sendTextMessage("123", null, content, null, null);
 	}
 
 	@Override
@@ -63,6 +109,12 @@ public class Szeged extends Activity implements OnCheckedChangeListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		return true;
+	}
+	
+	private String getCarrierInfo() {
+		TelephonyManager manager = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE));
+		String carrierName = manager.getSimOperatorName();
+		return carrierName;
 	}
 
 }
